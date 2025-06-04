@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Birthday Times</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            background-image: url('images/WhatsApp\ Image\ 2025-06-05\ at\ 00.58.56_a105104a.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            padding: 20px;
+        }
+
+        .magazine-container {
+            position: relative;
+            width: 800px;
+            height: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .magazine {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .page-spread {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backface-visibility: hidden;
+            transform-origin: left center;
+            transition: transform 1s ease-in-out;
+            cursor: pointer;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+
+        .page-spread:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .page-spread.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .left-page, .right-page {
+            padding: 40px;
+            border-right: 3px solid #333;
+            position: relative;
+            background: #ffffff;
+        }
+
+        .right-page {
+            border-right: none;
+            border-left: 3px solid #333;
+        }
+
+        /* Cover page styling */
+        .cover-spread {
+            z-index: 4;
+        }
+
+        .cover-left {
+            background: linear-gradient(180deg, #B79EA1, #574144);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cover-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.8rem;
+            font-style: italic;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .cover-right {
+            background: #ffffff;
+        }
+
+        .newspaper-header {
+            text-align: center;
+            border-bottom: 3px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .main-title {
+            font-size: 3.2rem;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .newspaper-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            color: #666;
+        }
+
+        .main-headline {
+            font-size: 2.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 25px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .sub-headline {
+            font-size: 1.5rem;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 25px;
+            color: #444;
+        }
+
+      .photo-placeholder {
+    width: 69%; /* Try 90% instead of 100% to leave some space */
+    max-width: 100%;
+    height: 250px; /* Increase height if needed */
+    background: #f0f0f0;
+    border: 2px solid #333;
+    margin: 20px auto; /* 'auto' centers it horizontally */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+
+
+.photo-placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* or 'contain' if you prefer no cropping */
+}
+.photo-placeholder-second {
+    width: 69%;    /* new width */
+    height: 290px; /* new height */
+    border-color: #555;
+    /* any other adjustments */
+}
+.photo-placeholder-third {
+  width: 64%;    /* example */
+  height: 270px; /* example */
+  border-color: #888;
+  /* your custom styles */
+}
+.photo-placeholder-forth {
+  width: 65%;    /* example */
+  height: 270px; /* example */
+  border-color: #888;
+  /* your custom styles */
+}
+.photo-placeholder-fifth {
+  width: 64%;    /* example */
+  height: 270px; /* example */
+  border-color: #888;
+  /* your custom styles */
+}
+.photo-placeholder-sixth {
+  width: 65%;    /* example */
+  height: 270px; /* example */
+  border-color: #888;
+  /* your custom styles */
+}
+.photo-placeholder-seventh {
+  width: 65%;    /* example */
+  height: 270px; /* example */
+  border-color: #888;
+  /* your custom styles */
+}
+.photo-placeholder-eight {
+  width: 90%;    /* example */
+  height: 270px; /* example */
+  border-color: #888;
+  /* your custom styles */
+}
+
+
+
+        .article-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: justify;
+            margin: 20px 0;
+        }
+
+        .date-box {
+            text-align: center;
+            border: 3px solid #333;
+            padding: 20px;
+            margin: 25px 0;
+            background: #f9f9f9;
+        }
+
+        .date-number {
+            font-size: 4rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .date-month {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .celebration-text {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .signature-style {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 3rem;
+            text-align: center;
+            margin: 25px 0;
+            color: #444;
+            transform: rotate(-3deg);
+        }
+
+        .ornate-divider {
+            text-align: center;
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .vintage-border {
+            border: 3px double #333;
+            padding: 15px;
+            margin: 20px 0;
+            background: #fafafa;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            font-size: 1rem;
+            color: #666;
+            animation: pulse 2s infinite;
+            background: rgba(255,255,255,0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .back-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+            font-size: 1rem;
+            color: #666;
+            animation: pulse 2s infinite;
+            background: rgba(255,255,255,0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .back-hint.show {
+            display: block;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #888;
+        }
+
+        /* Page positioning */
+        .spread-1 { z-index: 3; }
+        .spread-2 { z-index: 2; }
+        .spread-3 { z-index: 1; }
+
+        /* Mobile responsiveness */
+        @media (max-width: 900px) {
+            .magazine-container {
+                width: 85vw;
+                height: 90vh;
+                min-height: 600px;
+            }
+            
+            .left-page, .right-page {
+                padding: 20px;
+            }
+            
+            .cover-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .main-headline {
+                font-size: 1.8rem;
+            }
+            
+            .photo-placeholder {
+                height: 140px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .magazine-container {
+                width: 95vw;
+                height: 85vh;
+            }
+            
+            .page-spread {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-page, .right-page {
+                border-right: none;
+                border-left: none;
+                border-bottom: 2px solid #333;
+                padding: 15px;
+            }
+            
+            .right-page {
+                border-bottom: none;
+            }
+            
+            .photo-placeholder {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="magazine-container" id="magazineContainer">
+        <div class="magazine">
+            <!-- Cover Spread -->
+            <div class="page-spread cover-spread" id="coverSpread">
+                <div class="left-page cover-left">
+                    <h1 class="cover-title">HAPPY BIRTHDAY</h1>
+                    <p class="cover-subtitle">A Special Edition Just For You</p>
+                    <div style="font-size: 1.2rem; margin-top: 30px;">🎉 ✨ 🎂 ✨ 🎉</div>
+                </div>
+                
+                <div class="right-page cover-right">
+                    <div class="newspaper-header">
+                        <div class="newspaper-info">
+                            <span>THURSDAY, JUNE 5, 2025</span>
+                            <span>SPECIAL EDITION</span>
+                        </div>
+                        <h1 class="main-title">The Birthday Times</h1>
+                    </div>
+
+                    <h2 class="main-headline">LAURA SANG IS TURNING 21!</h2>
+                    <h3 class="sub-headline">Cheers to the birthday girl!</h3>
+
+                    <div class="photo-placeholder">
+                        <img src="images/WhatsApp Image 2025-06-04 at 20.50.42_9e2b356a.jpg">
+                    </div>
+
+                    <div class="signature-style">
+                        Party Time!
+                    </div>
+                </div>
+                <div class="click-hint">Click to open magazine →</div>
+            </div>
+
+            <!-- Spread 1: Memories & Celebration -->
+            <div class="page-spread spread-1" id="spread1">
+                <div class="left-page">
+                    <h2 class="main-headline">OLDER, WISER, HAPPIER</h2>
+                    <div class="ornate-divider">❦ ❦ ❦</div>
+                    
+                    <div class="photo-placeholder photo-placeholder-second">
+                        <img src="images/WhatsApp Image 2025-06-04 at 22.32.19_9fc03ddc.jpg">
+                    </div>
+                    
+                    <div class="article-text">
+                        Time to blow out those candles! Today marks another incredible year in the life of someone truly amazing. From laughter-filled moments to adventures yet to come, this special day celebrates all the wonderful memories we've shared and the exciting future ahead.
+                    </div>
+
+                    <div class="date-box">
+                        <div class="date-number">05</div>
+                        <div class="date-month">JUNE</div>
+                        <div class="celebration-text">Let's Celebrate! 🥂</div>
+                    </div>
+                </div>
+                
+                <div class="right-page">
+                    <h2 class="main-headline">MEMORIES & MOMENTS</h2>
+                    <div class="ornate-divider">✦ ✦ ✦</div>
+                    
+                    <div class="photo-placeholder photo-placeholder-third">
+                        <img src="images/WhatsApp Image 2025-06-04 at 22.54.07_45767169.jpg">
+                    </div>
+                    
+                    <div class="article-text">
+                        Looking back at all the incredible moments we've shared together. From impulsive decisions to quiet conversations, each memory has woven itself into the beautiful tapestry of friendship and joy that defines who you are.
+                    </div>
+                    
+                    <div class="vintage-border">
+                        <p style="text-align: center; font-style: italic; font-size: 1.2rem;">
+                            "The best birthdays are filled with laughter, love, and the people who matter most."
+                        </p>
+                    </div>
+                </div>
+                <div class="click-hint"> →</div>
+                <div class="back-hint" id="backHint1">← </div>
+                <div class="page-number"> </div>
+            </div>
+
+            <!-- Spread 2: Birthday Wishes -->
+            <div class="page-spread spread-2" id="spread2">
+                <div class="left-page">
+                    <h2 class="main-headline">BIRTHDAY WISHES</h2>
+                    <div class="ornate-divider">♥ ♥ ♥</div>
+                    
+                    <div class="article-text">
+                        May this new year of your life be filled with incredible adventures, genuine laughter, and new worthwile connections. You deserve every bit of happiness that comes your way, and so much more.
+                    </div>
+                    
+                    <div class="photo-placeholder photo-placeholder-forth">
+                        <img src="images/WhatsApp Image 2025-06-04 at 23.03.39_ae3344cd.jpg">
+                    </div>
+                    
+                      <div class="photo-placeholder photo-placeholder-eight">
+                        <img src="images/image.png">
+                    </div>
+                </div>
+                
+                <div class="right-page">
+                    <h2 class="main-headline">THE YEAR AHEAD</h2>
+                    <div class="ornate-divider">⭐ ⭐ ⭐</div>
+                    
+                    <div class="photo-placeholder photo-placeholder-fifth">
+                        <img src="images/WhatsApp Image 2025-06-04 at 23.07.10_c466d328.jpg">
+                    </div>
+                    
+                    <div class="article-text">
+                        As you blow out your candles and make a wish, know that you have friends who believe in you. I am proud of the far you've come there's still alot to conquer, you will get all your heart's desires.
+                    </div>
+                    
+                    <div class="signature-style">
+                        Cheers to 21!!
+                    </div>
+                    
+                    <div class="article-text">
+                        You are a really good friend and I do appreciate having you in my life, when Declan talked about Hayley and said "She had a smile that could end wars and a heart big as Ireland" It reminded me of you. I hope you never lose that spark. It suits you. 
+                    </div>
+                </div>
+                <div class="click-hint"> →</div>
+                <div class="back-hint" id="backHint2">← </div>
+                <div class="page-number"></div>
+            </div>
+
+            <!-- Spread 3: Final Thoughts -->
+            <div class="page-spread spread-3" id="spread3">
+                <div class="left-page">
+                    <h2 class="main-headline">WITH LOVE</h2>
+                    <div class="ornate-divider">💝 💝 💝</div>
+                    
+                    <div class="article-text">
+                        "When I'm laughing with her and I suddenly get this deep sense of love for her and appreciation for being able to have such a radiant and special soul in my life, but I cant sayll that randomllt so I just stare at her♥️"
+                    </div>
+                    
+                    <div class="photo-placeholder photo-placeholder-sixth">
+                        <img src="images/WhatsApp Image 2025-06-04 at 23.10.24_f20361bf.jpg">
+                    </div>
+                    
+                    <div class="vintage-border">
+                        <p style="text-align: center; font-size: 1.3rem; font-weight: bold;">
+                            "I do have my sun though, I like the moon follow her brightness...".
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="right-page">
+                    <h2 class="main-headline">HAPPY BIRTHDAY!</h2>
+                    <div class="ornate-divider">🎂 🎉 🎂</div>
+                    
+                    <div class="photo-placeholder photo-placeholder-seventh">
+                        <img src="images/WhatsApp Image 2025-06-04 at 23.11.50_e50deb2f.jpg">
+                    </div>
+                    
+                    <div class="signature-style">
+                        With Lots of Love & Best Wishes
+                    </div>
+                    
+                    <div class="article-text" style="text-align: center; font-size: 1.2rem;">
+                        May your special day be as wonderful as you are, and may the year ahead bring you everything your heart desires. Here's to celebrating you today and always! 🎂✨
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 30px; font-size: 1.5rem;">
+                        🎈 🎊 Happy Birthday! 🎊 🎈
+                    </div>
+                </div>
+                <div class="back-hint" id="backHint3">← </div>
+                <div class="page-number"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSpread = 0;
+        const spreads = ['coverSpread', 'spread1', 'spread2', 'spread3'];
+
+        // Add click event listeners to all spreads
+        spreads.forEach((spreadId, index) => {
+            const spread = document.getElementById(spreadId);
+            spread.addEventListener('click', (e) => {
+                // Check if clicked on back hint
+                if (e.target.classList.contains('back-hint')) {
+                    goBack();
+                    return;
+                }
+                
+                if (index === currentSpread) {
+                    turnPage();
+                }
+            });
+        });
+
+        // Add click listeners to back hints
+        document.querySelectorAll('.back-hint').forEach(backHint => {
+            backHint.addEventListener('click', (e) => {
+                e.stopPropagation();
+                goBack();
+            });
+        });
+
+        function turnPage() {
+            if (currentSpread < spreads.length - 1) {
+                const currentSpreadElement = document.getElementById(spreads[currentSpread]);
+                
+                // Flip the entire spread
+                currentSpreadElement.classList.add('flipped');
+                currentSpread++;
+                
+                // Show back hint for pages after cover
+                updateHints();
+                
+                // Add page turn sound
+                playPageSound();
+            }
+        }
+
+        function goBack() {
+            if (currentSpread > 0) {
+                currentSpread--;
+                const spreadToUnflip = document.getElementById(spreads[currentSpread]);
+                
+                // Unflip the spread
+                spreadToUnflip.classList.remove('flipped');
+                
+                // Update hints
+                updateHints();
+                
+                // Add page turn sound
+                playPageSound();
+            }
+        }
+
+        function updateHints() {
+            // Hide all back hints first
+            document.querySelectorAll('.back-hint').forEach(hint => {
+                hint.classList.remove('show');
+            });
+            
+            // Show back hint for current spread if not on cover
+            if (currentSpread > 0) {
+                const currentBackHint = document.getElementById(`backHint${currentSpread}`);
+                if (currentBackHint) {
+                    currentBackHint.classList.add('show');
+                }
+            }
+        }
+
+        function playPageSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(120, audioContext.currentTime);
+                gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                // Ignore audio errors
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                turnPage();
+            } else if (e.key === 'ArrowLeft') {
+                goBack();
+            }
+        });
+
+        // Touch/swipe support
+        let startX = 0;
+        document.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (diff > 50) {
+                turnPage(); // Swipe left to go forward
+            } else if (diff < -50) {
+                goBack(); // Swipe right to go back
+            }
+        });
+    </script>
+</body>
+</html>
